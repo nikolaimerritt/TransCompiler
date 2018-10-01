@@ -1,0 +1,51 @@
+New lines separate statements
+Variable declaration is as normal, e.g. `x = 12`. Variables are dynamically typed
+Comments are written in curly braces, e.g. { comment is here }
+
+If statements:
+if x is 12
+    { do line 1 }
+    { do line 2 }
+{if statement has ended here}
+
+Keywords such as is and isnt are used instead of == and !=
+Keywords and, or and not are used. They are distributive: i.e. `if x is 12 or 13` is the same as `if x is 12 or x is 13`.
+This means that booleans must be used with `is true` at the end, i.e. `if x is true` istead of `if x`.
+
+For loops are written like this:
+for each el in list { for-each loop }
+for each i in 0 to 10 { C-style for loop }
+This means that `a to b` generates the list of values a, a + 1, ... , b. 
+
+`go over` is a special kind of for loop. It automatically makes element variable if list name ends in s. These are passed by referene. E.g:
+go over names:
+	show name
+	name = "Bob" { shows each name, then changes name to be "Bob". }
+
+Functions do not need brackets, e.g. print "hi!", length [1, 2, 5]
+Functions embedded in code will need brackets around the whole thing, e.g. if (sum a, b) is 12
+
+Functions will be treated as self-calculating variables. E.g.
+power: toRaise, powerToRaiseBy
+    value = toRaise
+    for each i in 0 to powerToRaiseBy
+        value = value * value
+    power = value
+
+For void functions, there will be no `functionName = value` thing. The keyword `end` is used to break out of a function prematurely
+
+Classes will be called blueprints. `this` will be replaced with the blueprint name. Attributes will be private by default. The constructor will just be a function called `new`.
+Attributes can have auto-generated getters and setters by putting `get` or `set` in brackets.
+
+blueprint Car:
+    speed (get, set)
+    colour (set)
+    numberPlate
+    
+    new: speed, colour, numberPlate
+        Car.speed = speed
+        Car.colour = colour
+        Car.numberPlate = numberPlate
+
+    acceleration: mass
+        acceleration = speed * mass

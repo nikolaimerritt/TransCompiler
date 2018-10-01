@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Language">
+      <UniqueIdentifier>{8f732a8e-0e27-41b7-891b-7032b3f6388a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compiler">
+      <UniqueIdentifier>{d6256ff4-6e73-44ee-bab2-482e7d880c5c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Compiler\Util.h">
+      <Filter>Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="Compiler\Mistake.h">
+      <Filter>Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="Compiler\BuildAST.h">
+      <Filter>Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="Compiler\BuildContextTree.h">
+      <Filter>Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="Compiler\InterpretTree.h">
+      <Filter>Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="Compiler\NewLexer.h">
+      <Filter>Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="Language\Core.h">
+      <Filter>Language</Filter>
+    </ClInclude>
+    <ClInclude Include="Language\Object.h">
+      <Filter>Language</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Compiler\Mistake.cpp">
+      <Filter>Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="Compiler\Util.cpp">
+      <Filter>Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="Ptitsa.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Compiler\BuildAST.cpp">
+      <Filter>Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="Compiler\BuildContextTree.cpp">
+      <Filter>Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="Compiler\InterpretTree.cpp">
+      <Filter>Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="Compiler\LexerStructs.cpp">
+      <Filter>Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="Language\Core.cpp">
+      <Filter>Language</Filter>
+    </ClCompile>
+    <ClCompile Include="Language\Object.cpp">
+      <Filter>Language</Filter>
+    </ClCompile>
+    <ClCompile Include="Language\ObjectOperators.cpp">
+      <Filter>Language</Filter>
+    </ClCompile>
+    <ClCompile Include="Compiler\CreateTypedLexemes.cpp">
+      <Filter>Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="Compiler\ParseLexemes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Specification.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="program.pti" />
+  </ItemGroup>
+</Project>

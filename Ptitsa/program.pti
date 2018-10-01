@@ -1,0 +1,4 @@
+x = 5
+while not ( x is 7 )
+	x = x + 1
+	show x
