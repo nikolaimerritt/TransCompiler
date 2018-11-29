@@ -1,7 +1,7 @@
 #ifndef CONTEXT_TREE_INCLUDE
 #define CONTEXT_TREE_INCLUDE
 
-#include "Lexer.h"
+#include "NewLexer.h"
 #include "BuildAST.h"
 #include <vector>
 

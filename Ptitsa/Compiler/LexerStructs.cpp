@@ -1,6 +1,7 @@
 #include <string>
 #include <stdexcept>
 #include <map>
+#include <iostream>
 
 #include "NewLexer.h"
 
@@ -12,7 +13,7 @@ bool NewLexer::Lexeme::isRaw() { return false; }
 bool NewLexer::Lexeme::isSymbol() { return false; }
 bool NewLexer::Lexeme::isVariable() { return false; }
 
-NewLexer::Lexeme::~Lexeme() { }
+NewLexer::Lexeme::~Lexeme() = default;
 
 // RawLexeme
 NewLexer::RawLexeme::RawLexeme(std::string const & value): value(value) { }
@@ -103,7 +104,7 @@ bool NewLexer::Function::operator<(Function const & other) const
 }
 
 // Variable
-NewLexer::Variable::Variable() {  }
+NewLexer::Variable::Variable() = default;
 
 NewLexer::Variable::Variable(std::string const & identifier):
 	identifier(identifier),
@@ -304,7 +305,7 @@ std::ostream& NewLexer::operator<<(std::ostream & ostream, NewLexer::LexemeLine 
 	}
 	ostream << " } ";
 
-	for (PLexeme lex : line)
+	for (PLexeme const & lex : line)
 	{
 		ostream << lex << " "; 
 	}

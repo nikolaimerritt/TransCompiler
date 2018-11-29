@@ -5,7 +5,6 @@
 #include <iostream>
 #include <vector>
 
-#include "Lexer.h"
 #include "NewLexer.h"
 #include "BuildAST.h"
 #include "BuildContextTree.h"
@@ -45,7 +44,6 @@ namespace Util
 	int bracketPolarity(NewLexer::LexemeLine const & line, unsigned start, unsigned end);
 	
 	int closingBracketIndex(NewLexer::LexemeLine const & line, unsigned start);
-	bool varAlreadyDefined(Lexer::Variable);
 
 	std::vector<std::vector<NewLexer::PLexeme>> commandArguments(NewLexer::LexemeLine const & line, unsigned openingBracketIdx);
 
