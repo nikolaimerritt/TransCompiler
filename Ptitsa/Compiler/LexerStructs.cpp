@@ -3,46 +3,46 @@
 #include <map>
 #include <iostream>
 
-#include "NewLexer.h"
+#include "Lexer.h"
 
 // Lexeme
-bool NewLexer::Lexeme::isFunction() { return false; }
-bool NewLexer::Lexeme::isKeyword() { return false; }
-bool NewLexer::Lexeme::isLiteral() { return false; }
-bool NewLexer::Lexeme::isRaw() { return false; }
-bool NewLexer::Lexeme::isSymbol() { return false; }
-bool NewLexer::Lexeme::isVariable() { return false; }
+bool Lexer::Lexeme::isFunction() { return false; }
+bool Lexer::Lexeme::isKeyword() { return false; }
+bool Lexer::Lexeme::isLiteral() { return false; }
+bool Lexer::Lexeme::isRaw() { return false; }
+bool Lexer::Lexeme::isSymbol() { return false; }
+bool Lexer::Lexeme::isVariable() { return false; }
 
-NewLexer::Lexeme::~Lexeme() = default;
+Lexer::Lexeme::~Lexeme() = default;
 
 // RawLexeme
-NewLexer::RawLexeme::RawLexeme(std::string const & value): value(value) { }
+Lexer::RawLexeme::RawLexeme(std::string const & value): value(value) { }
 
-bool NewLexer::RawLexeme::isRaw() { return true; }
+bool Lexer::RawLexeme::isRaw() { return true; }
 
 // Keyword
-NewLexer::Keyword::Keyword(NewLexer::Keyword::Type type):
+Lexer::Keyword::Keyword(Lexer::Keyword::Type type):
 	type(type)
 { }
 
-bool NewLexer::Keyword::isKeyword() { return true; }
+bool Lexer::Keyword::isKeyword() { return true; }
 
-std::map<std::string, NewLexer::Keyword::Type> const NewLexer::Keyword::valuesToKeywordTypes = {
-	{"if", NewLexer::Keyword::IF },
-	{"foreach", NewLexer::Keyword::FOR_EACH},
-	{"while", NewLexer::Keyword::WHILE}
+std::map<std::string, Lexer::Keyword::Type> const Lexer::Keyword::valuesToKeywordTypes = {
+	{"if", Lexer::Keyword::IF },
+	{"foreach", Lexer::Keyword::FOR_EACH},
+	{"while", Lexer::Keyword::WHILE}
 };
 
 // Literal
-NewLexer::Literal::Literal(std::string const & value, NewLexer::Literal::Type type):
+Lexer::Literal::Literal(std::string const & value, Lexer::Literal::Type type):
 	value(value),
 	type(type)
 { }
 
- bool NewLexer::Literal::isLiteral() { return true; }
+ bool Lexer::Literal::isLiteral() { return true; }
 
 // Function
-NewLexer::Function::Function() : 
+Lexer::Function::Function() :
 	type(UNKNOWN),
 	processed(false),
 	args(0),
@@ -51,7 +51,7 @@ NewLexer::Function::Function() :
 	order(0)
 { }
 
-NewLexer::Function::Function(std::string const & identifier, std::string const & asCpp, NewLexer::Function::Type type):
+Lexer::Function::Function(std::string const & identifier, std::string const & asCpp, Lexer::Function::Type type):
 	identifier(identifier),
 	asCpp(asCpp),
 	type(type),
@@ -62,7 +62,7 @@ NewLexer::Function::Function(std::string const & identifier, std::string const &
 	else throw std::invalid_argument("Cannot deduce arg amount from non-infix function " + identifier);
 }
 
-NewLexer::Function::Function(std::string const & identifier, std::string const & asCpp) :
+Lexer::Function::Function(std::string const & identifier, std::string const & asCpp) :
 	identifier(identifier),
 	asCpp(asCpp),
 	type(POSTFIX),
@@ -71,7 +71,7 @@ NewLexer::Function::Function(std::string const & identifier, std::string const &
 	order(0)
 { }
 
-NewLexer::Function::Function(std::string const & identifier, std::string const & asCpp, NewLexer::Function::Type type, int args) :
+Lexer::Function::Function(std::string const & identifier, std::string const & asCpp, Lexer::Function::Type type, int args) :
 	identifier(identifier),
 	asCpp(asCpp),
 	type(type),
@@ -80,7 +80,7 @@ NewLexer::Function::Function(std::string const & identifier, std::string const &
 	order(0)
 { }
 
-NewLexer::Function::Function(NewLexer::Function const & copy):
+Lexer::Function::Function(Lexer::Function const & copy):
 	identifier(copy.identifier),
 	asCpp(copy.asCpp),
 	type(copy.type),
@@ -89,47 +89,47 @@ NewLexer::Function::Function(NewLexer::Function const & copy):
 	processed(copy.processed)
 { }
 
- bool NewLexer::Function::isFunction() { return true; }
+ bool Lexer::Function::isFunction() { return true; }
 
-bool NewLexer::Function::operator==(NewLexer::Function const & other) const
+bool Lexer::Function::operator==(Lexer::Function const & other) const
 {
 	return identifier == other.identifier 
 		&& asCpp == other.asCpp
 		&& type == other.type
 		&& args == other.args;
 }
-bool NewLexer::Function::operator<(Function const & other) const
+bool Lexer::Function::operator<(Function const & other) const
 {
 	return identifier < other.identifier;
 }
 
 // Variable
-NewLexer::Variable::Variable() = default;
+Lexer::Variable::Variable() = default;
 
-NewLexer::Variable::Variable(std::string const & identifier):
+Lexer::Variable::Variable(std::string const & identifier):
 	identifier(identifier),
 	row(0),
 	depth(0)
 { }
 
-NewLexer::Variable::Variable(std::string const & identifier, unsigned lineNumber, unsigned depth):
+Lexer::Variable::Variable(std::string const & identifier, unsigned lineNumber, unsigned depth):
 	identifier(identifier),
 	row(lineNumber),
 	depth(depth)
 { }
 
- bool NewLexer::Variable::isVariable() { return true; }
+ bool Lexer::Variable::isVariable() { return true; }
 
-bool NewLexer::Variable::operator==(Variable const & other) const
+bool Lexer::Variable::operator==(Variable const & other) const
 {
 	return	this->identifier == other.identifier 
 			&& this->depth == other.depth
 			&& this->row == other.row;
 }
 
-bool NewLexer::Variable::operator<(Variable const & other) const { return this->row < other.row; }
+bool Lexer::Variable::operator<(Variable const & other) const { return this->row < other.row; }
 
-bool NewLexer::Variable::operator<=(Variable const & other) const
+bool Lexer::Variable::operator<=(Variable const & other) const
 {
 	return identifier == other.identifier
 		&& row <= other.row
@@ -137,68 +137,68 @@ bool NewLexer::Variable::operator<=(Variable const & other) const
 }
 
 // SyntaxSymbol
-NewLexer::Symbol::Symbol(NewLexer::Symbol::Type type):
+Lexer::Symbol::Symbol(Lexer::Symbol::Type type):
 	type(type),
 	processed(false)
 { }
 
-std::map<std::string, NewLexer::Symbol::Type> const NewLexer::Symbol::idsToSymbols = {
+std::map<std::string, Lexer::Symbol::Type> const Lexer::Symbol::idsToSymbols = {
 	{ "(", Symbol::OPEN_BRACKET },
 	{ ")", Symbol::CLOSE_BRACKET },
 	{ ",", Symbol::ARGS_SEP },
 	{ ":", Symbol::COLON }
 };
 
-bool NewLexer::Symbol::isSymbol() { return true; }
+bool Lexer::Symbol::isSymbol() { return true; }
 
 // LexemeLine
-NewLexer::LexemeLine::LexemeLine(std::vector<NewLexer::PLexeme> const & lexemes) :
+Lexer::LexemeLine::LexemeLine(std::vector<Lexer::PLexeme> const & lexemes) :
 	lexemes(lexemes),
 	type(UNKNOWN),
 	depth(0)
 { }
 
-NewLexer::LexemeLine::LexemeLine(LexemeLine::Type type):
+Lexer::LexemeLine::LexemeLine(LexemeLine::Type type):
 	lexemes(),
 	type(type),
 	depth(0)
 { }
 
-NewLexer::LexemeLine::LexemeLine():
+Lexer::LexemeLine::LexemeLine():
 	lexemes(),
 	type(UNKNOWN),
 	depth(0)
 { }
 
-NewLexer::PLexeme& NewLexer::LexemeLine::operator[](unsigned i) { return lexemes[i]; }
+Lexer::PLexeme& Lexer::LexemeLine::operator[](unsigned i) { return lexemes[i]; }
 
-NewLexer::PLexeme const NewLexer::LexemeLine::operator[](unsigned i) const { return lexemes[i]; }
+Lexer::PLexeme const Lexer::LexemeLine::operator[](unsigned i) const { return lexemes[i]; }
 
-std::vector<NewLexer::PLexeme>::iterator NewLexer::LexemeLine::begin() { return std::begin(lexemes); }
+std::vector<Lexer::PLexeme>::iterator Lexer::LexemeLine::begin() { return std::begin(lexemes); }
 
-std::vector<NewLexer::PLexeme>::const_iterator NewLexer::LexemeLine::begin() const { return std::begin(lexemes); }
+std::vector<Lexer::PLexeme>::const_iterator Lexer::LexemeLine::begin() const { return std::begin(lexemes); }
 
-std::vector<NewLexer::PLexeme>::iterator NewLexer::LexemeLine::end() { return std::end(lexemes); }
+std::vector<Lexer::PLexeme>::iterator Lexer::LexemeLine::end() { return std::end(lexemes); }
 
-std::vector<NewLexer::PLexeme>::const_iterator NewLexer::LexemeLine::end() const { return std::end(lexemes); }
+std::vector<Lexer::PLexeme>::const_iterator Lexer::LexemeLine::end() const { return std::end(lexemes); }
 
-unsigned NewLexer::LexemeLine::size() const { return lexemes.size(); }
+unsigned Lexer::LexemeLine::size() const { return lexemes.size(); }
 
-void NewLexer::LexemeLine::push_back(NewLexer::PLexeme const & lex) { lexemes.push_back(lex); }
+void Lexer::LexemeLine::push_back(Lexer::PLexeme const & lex) { lexemes.push_back(lex); }
 
-void NewLexer::LexemeLine::erase(unsigned i) { lexemes.erase(lexemes.begin() + i); }
+void Lexer::LexemeLine::erase(unsigned i) { lexemes.erase(lexemes.begin() + i); }
 
-void NewLexer::LexemeLine::insert(unsigned i, NewLexer::PLexeme const & toInsert) { lexemes.insert(lexemes.begin() + i, toInsert); }
+void Lexer::LexemeLine::insert(unsigned i, Lexer::PLexeme const & toInsert) { lexemes.insert(lexemes.begin() + i, toInsert); }
 
-bool NewLexer::LexemeLine::isEmpty() const { return lexemes.empty(); }
+bool Lexer::LexemeLine::isEmpty() const { return lexemes.empty(); }
 
-bool NewLexer::LexemeLine::isNotEmpty() const { return !lexemes.empty(); }
+bool Lexer::LexemeLine::isNotEmpty() const { return !lexemes.empty(); }
 
-NewLexer::LexemeLine NewLexer::LexemeLine::makeCopyBetween(unsigned start, unsigned end) const
+Lexer::LexemeLine Lexer::LexemeLine::makeCopyBetween(unsigned start, unsigned end) const
 {
 	if (end - start >= 0)
 	{
-		std::vector<NewLexer::PLexeme> copy;
+		std::vector<Lexer::PLexeme> copy;
 		copy.reserve(end - start + 1);
 		copy.insert(copy.begin(), lexemes.begin() + start, lexemes.begin() + end + 1); // end usually exclusive. want to be inclusive
 		return LexemeLine(copy);
@@ -206,13 +206,13 @@ NewLexer::LexemeLine NewLexer::LexemeLine::makeCopyBetween(unsigned start, unsig
 	else return LexemeLine(UNKNOWN);
 }
 
-std::ostream& NewLexer::operator<<(std::ostream & ostream, NewLexer::PRawLexeme const & lex) 
+std::ostream& Lexer::operator<<(std::ostream & ostream, Lexer::PRawLexeme const & lex)
 { 
 	ostream << "<(raw) " + lex->value + ">"; 
 	return ostream;
 }
 
-std::ostream& NewLexer::operator<<(std::ostream & ostream, NewLexer::PLiteral const & lex)
+std::ostream& Lexer::operator<<(std::ostream & ostream, Lexer::PLiteral const & lex)
 {
 	ostream << "<(lit) ";
 	switch (lex->type)
@@ -226,7 +226,7 @@ std::ostream& NewLexer::operator<<(std::ostream & ostream, NewLexer::PLiteral co
 	return ostream;
 }
 
-std::ostream& NewLexer::operator<<(std::ostream & ostream, NewLexer::PKeyword const & lex)
+std::ostream& Lexer::operator<<(std::ostream & ostream, Lexer::PKeyword const & lex)
 {
 	ostream << "<(kw) ";
 	switch (lex->type)
@@ -239,7 +239,7 @@ std::ostream& NewLexer::operator<<(std::ostream & ostream, NewLexer::PKeyword co
 	ostream << ">";
 	return ostream;
 }
-std::ostream& NewLexer::operator<<(std::ostream & ostream, NewLexer::PFunction const & lex)
+std::ostream& Lexer::operator<<(std::ostream & ostream, Lexer::PFunction const & lex)
 {
 	ostream << "<(fn) ";
 	switch (lex->type)
@@ -253,7 +253,7 @@ std::ostream& NewLexer::operator<<(std::ostream & ostream, NewLexer::PFunction c
 	return ostream;
 }
 
-std::ostream& NewLexer::operator<<(std::ostream & ostream, NewLexer::PSymbol const & lex)
+std::ostream& Lexer::operator<<(std::ostream & ostream, Lexer::PSymbol const & lex)
 {
 	ostream << "<(sym) ";
 	switch (lex->type)
@@ -269,13 +269,13 @@ std::ostream& NewLexer::operator<<(std::ostream & ostream, NewLexer::PSymbol con
 	return ostream;
 }
 
-std::ostream& NewLexer::operator<<(std::ostream & ostream, NewLexer::PVariable const & lex)
+std::ostream& Lexer::operator<<(std::ostream & ostream, Lexer::PVariable const & lex)
 {
 	ostream << "<(var) " << lex->identifier << " d: " << lex->depth << ", r: " << lex->row << ">";
 	return ostream;
 }
 
-std::ostream & NewLexer::operator<<(std::ostream & ostream, NewLexer::PLexeme const & lex)
+std::ostream & Lexer::operator<<(std::ostream & ostream, Lexer::PLexeme const & lex)
 {
 	if (lex->isFunction())			ostream << std::dynamic_pointer_cast<Function>(lex);
 	else if (lex->isKeyword())		ostream << std::dynamic_pointer_cast<Keyword>(lex);
@@ -288,7 +288,7 @@ std::ostream & NewLexer::operator<<(std::ostream & ostream, NewLexer::PLexeme co
 	return ostream;
 }
 
-std::ostream& NewLexer::operator<<(std::ostream & ostream, NewLexer::LexemeLine const & line)
+std::ostream& Lexer::operator<<(std::ostream & ostream, Lexer::LexemeLine const & line)
 {
 	ostream << "{ ";
 	switch (line.type)

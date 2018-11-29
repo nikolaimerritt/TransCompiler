@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 
-namespace NewLexer
+namespace Lexer
 {
 	struct Lexeme
 	{	

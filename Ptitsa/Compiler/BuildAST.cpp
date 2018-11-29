@@ -1,6 +1,6 @@
 #include "BuildAST.h"
 #include "Util.h"
-#include "NewLexer.h"
+#include "Lexer.h"
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -10,7 +10,7 @@ BuildAST::ASTNode::ASTNode():
 	children()
 { }
 
-BuildAST::ASTNode::ASTNode(NewLexer::PLexeme const & lex):
+BuildAST::ASTNode::ASTNode(Lexer::PLexeme const & lex):
 	lex(lex),
 	children()
 { }
@@ -24,7 +24,7 @@ BuildAST::ASTNode::ASTNode(BuildAST::ASTNode && temp) :
 	temp.lex = nullptr;
 }
 
-BuildAST::ASTNode::ASTNode(NewLexer::PLexeme const & lex, std::vector<BuildAST::PASTNode> && tempChildren) :
+BuildAST::ASTNode::ASTNode(Lexer::PLexeme const & lex, std::vector<BuildAST::PASTNode> && tempChildren) :
 	lex(lex),
 	children(std::move(tempChildren))
 {
@@ -40,9 +40,9 @@ void BuildAST::ASTNode::add(BuildAST::PASTNode && node)
 }
 
 
-void BuildAST::generateAST(NewLexer::LexemeLine const & line, BuildAST::PASTNode & root)
+void BuildAST::generateAST(Lexer::LexemeLine const & line, BuildAST::PASTNode & root)
 {
-	using namespace NewLexer;
+	using namespace Lexer;
 	using std::static_pointer_cast;
 
 	if (line.size() < 1) return;
@@ -70,25 +70,25 @@ void BuildAST::generateAST(NewLexer::LexemeLine const & line, BuildAST::PASTNode
 		root->lex = line[maxOrderIdx];
 		Function const fn = * static_pointer_cast<Function>(root->lex);
 
-		if (fn.type == NewLexer::Function::PREFIX) // is prefix function
+		if (fn.type == Lexer::Function::PREFIX) // is prefix function
 		{
-			const std::vector<std::vector<NewLexer::PLexeme>> args = Util::commandArguments(line, maxOrderIdx - 1);
-			for (const std::vector<NewLexer::PLexeme>& argument : args)
+			const std::vector<std::vector<Lexer::PLexeme>> args = Util::commandArguments(line, maxOrderIdx - 1);
+			for (const std::vector<Lexer::PLexeme>& argument : args)
 			{
 				PASTNode node = std::make_unique<ASTNode>();
-				const NewLexer::LexemeLine argAsLexemeLine(argument);
+				const Lexer::LexemeLine argAsLexemeLine(argument);
 				generateAST(argAsLexemeLine, node);
 				root->add(std::move(node));
 			}
 		}
-		else if (fn.type == NewLexer::Function::INFIX) // is two-arg operator
+		else if (fn.type == Lexer::Function::INFIX) // is two-arg operator
 		{
-			NewLexer::LexemeLine const leftArgs = line.makeCopyBetween(0, maxOrderIdx - 1); // End NOT inclusive, hence no -1
+			Lexer::LexemeLine const leftArgs = line.makeCopyBetween(0, maxOrderIdx - 1); // End NOT inclusive, hence no -1
 			PASTNode leftArgsNodes = std::make_unique<ASTNode>();
 			generateAST(leftArgs, leftArgsNodes);
 			root->add(std::move(leftArgsNodes));
 
-			NewLexer::LexemeLine const rightArgs = line.makeCopyBetween(maxOrderIdx + 1, line.size() - 1);
+			Lexer::LexemeLine const rightArgs = line.makeCopyBetween(maxOrderIdx + 1, line.size() - 1);
 			PASTNode rightArgsNodes = std::make_unique<ASTNode>();
 			generateAST(rightArgs, rightArgsNodes);
 			root->add(std::move(rightArgsNodes));
@@ -97,16 +97,16 @@ void BuildAST::generateAST(NewLexer::LexemeLine const & line, BuildAST::PASTNode
 
 	else
 	{
-		for (NewLexer::PLexeme const & lex : line)
+		for (Lexer::PLexeme const & lex : line)
 		{
 			if (!lex->isSymbol()) root->lex = lex;
 		}
 	}
 }
 
-void BuildAST::setASTs(std::vector<NewLexer::LexemeLine> const & lexemeDoc, std::vector<PASTNode> & nodes)
+void BuildAST::setASTs(std::vector<Lexer::LexemeLine> const & lexemeDoc, std::vector<PASTNode> & nodes)
 {
-	for (NewLexer::LexemeLine const & line : lexemeDoc)
+	for (Lexer::LexemeLine const & line : lexemeDoc)
 	{
 		if (line.isNotEmpty())
 		{

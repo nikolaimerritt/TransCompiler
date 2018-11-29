@@ -36,7 +36,7 @@
     <ClInclude Include="Compiler\InterpretTree.h">
       <Filter>Compiler</Filter>
     </ClInclude>
-    <ClInclude Include="Compiler\NewLexer.h">
+    <ClInclude Include="Compiler\Lexer.h">
       <Filter>Compiler</Filter>
     </ClInclude>
     <ClInclude Include="Language\Core.h">

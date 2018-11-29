@@ -1,7 +1,7 @@
 #ifndef CONTEXT_TREE_INCLUDE
 #define CONTEXT_TREE_INCLUDE
 
-#include "NewLexer.h"
+#include "Lexer.h"
 #include "BuildAST.h"
 #include <vector>
 
@@ -9,13 +9,13 @@ namespace BuildContextTree
 {
 	struct ContextTree
 	{
-		NewLexer::LexemeLine::Type type;
+		Lexer::LexemeLine::Type type;
 		BuildAST::PASTNode root;
 
-		ContextTree(NewLexer::LexemeLine::Type type, BuildAST::PASTNode && root);
+		ContextTree(Lexer::LexemeLine::Type type, BuildAST::PASTNode && root);
 	};
 
-	std::vector<ContextTree> generateContextTrees(std::vector<NewLexer::LexemeLine> const & lexemeDoc);
+	std::vector<ContextTree> generateContextTrees(std::vector<Lexer::LexemeLine> const & lexemeDoc);
 }
 
 #endif // !CONTEXT_TREE_INCLUDE 

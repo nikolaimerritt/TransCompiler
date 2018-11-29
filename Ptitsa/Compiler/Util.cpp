@@ -95,29 +95,29 @@ void Util::mollysPrintAST(BuildAST::PASTNode const & node, unsigned level)
 
 void Util::mollysPrintAST(BuildAST::PASTNode const & root) { mollysPrintAST(root, 0); }
 
-int Util::bracketPolarity(NewLexer::LexemeLine const & line, unsigned start, unsigned end)
+int Util::bracketPolarity(Lexer::LexemeLine const & line, unsigned start, unsigned end)
 {
 	int polarity = 0;
 	for (unsigned i = start; i <= end; i++)
 	{
 		if (line[i]->isSymbol())
 		{
-			NewLexer::Symbol::Type const symbolType = std::static_pointer_cast<NewLexer::Symbol>(line[i])->type;
+			Lexer::Symbol::Type const symbolType = std::static_pointer_cast<Lexer::Symbol>(line[i])->type;
 
 			switch (symbolType)
 			{
-				case NewLexer::Symbol::OPEN_BRACKET:	polarity++;		break;
-				case NewLexer::Symbol::CLOSE_BRACKET:	polarity--;		break;
+				case Lexer::Symbol::OPEN_BRACKET:	polarity++;		break;
+				case Lexer::Symbol::CLOSE_BRACKET:	polarity--;		break;
 			}
 		}
 	}
 	return polarity;
 }
 
-int Util::bracketPolarity(NewLexer::LexemeLine const & line, unsigned end) { return bracketPolarity(line, 0, end); }
-int Util::bracketPolarity(NewLexer::LexemeLine const & line) { return bracketPolarity(line, 0, line.size() - 1); }
+int Util::bracketPolarity(Lexer::LexemeLine const & line, unsigned end) { return bracketPolarity(line, 0, end); }
+int Util::bracketPolarity(Lexer::LexemeLine const & line) { return bracketPolarity(line, 0, line.size() - 1); }
 
-int Util::closingBracketIndex(NewLexer::LexemeLine const & line, unsigned start = 0)
+int Util::closingBracketIndex(Lexer::LexemeLine const & line, unsigned start = 0)
 {
 	for (unsigned i = start; i < line.size(); ++i)
 	{
@@ -126,22 +126,22 @@ int Util::closingBracketIndex(NewLexer::LexemeLine const & line, unsigned start 
 	return -1;
 }
 
-std::vector<std::vector<NewLexer::PLexeme>> Util::commandArguments(NewLexer::LexemeLine const & line, unsigned openingBracketIdx)
+std::vector<std::vector<Lexer::PLexeme>> Util::commandArguments(Lexer::LexemeLine const & line, unsigned openingBracketIdx)
 {
 	// Command call enclosed by brackets, so argsEndIdx is closing bracket idx - 1
 	unsigned const argsEndIdx = closingBracketIndex(line, openingBracketIdx) - 1;
 
 	// args separated by ','
-	std::vector<std::vector<NewLexer::PLexeme>> arguments;
-	std::vector<NewLexer::PLexeme> arg;
+	std::vector<std::vector<Lexer::PLexeme>> arguments;
+	std::vector<Lexer::PLexeme> arg;
 
 	for (unsigned i = openingBracketIdx + 2; i <= argsEndIdx; ++i)
 	{
 		if (line[i]->isSymbol())
 		{
-			NewLexer::Symbol::Type const type = static_pointer_cast<NewLexer::Symbol>(line[i])->type;
+			Lexer::Symbol::Type const type = static_pointer_cast<Lexer::Symbol>(line[i])->type;
 
-			if (type == NewLexer::Symbol::OPEN_BRACKET)
+			if (type == Lexer::Symbol::OPEN_BRACKET)
 			{
 				unsigned closeIdx = closingBracketIndex(line, i);
 				arg.insert(arg.end(), line.begin() + i, line.begin() + closeIdx + 1);
@@ -149,7 +149,7 @@ std::vector<std::vector<NewLexer::PLexeme>> Util::commandArguments(NewLexer::Lex
 				arg.clear();
 				i = closeIdx;
 			}
-			else if (type == NewLexer::Symbol::ARGS_SEP && !arg.empty())
+			else if (type == Lexer::Symbol::ARGS_SEP && !arg.empty())
 			{
 				arguments.push_back(arg);
 				arg.clear();

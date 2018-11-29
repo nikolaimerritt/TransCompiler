@@ -6,9 +6,9 @@
 
 namespace 
 {
-	std::string lexemeToCpp(NewLexer::PLexeme const & lex)
+	std::string lexemeToCpp(Lexer::PLexeme const & lex)
 	{
-		using namespace NewLexer;
+		using namespace Lexer;
 		using std::static_pointer_cast;
 
 		if (lex->isFunction())
@@ -45,7 +45,7 @@ namespace
 
 	std::string functionCallsToString(BuildAST::PASTNode const & node)
 	{
-		using namespace NewLexer;
+		using namespace Lexer;
 		std::string const nodeAsString = lexemeToCpp(node->lex);
 
 		if (node->children.empty()) return nodeAsString;
@@ -87,7 +87,7 @@ namespace
 
 	std::string treeToString(BuildContextTree::ContextTree const & tree)
 	{
-		using NewLexer::LexemeLine;
+		using Lexer::LexemeLine;
 		std::string const varType = "BuiltinType::Object";
 
 		switch (tree.type)

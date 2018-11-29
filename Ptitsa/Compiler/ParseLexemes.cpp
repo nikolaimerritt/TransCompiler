@@ -1,11 +1,11 @@
-#include "NewLexer.h"
+#include "Lexer.h"
 #include "Util.h"
 #include <vector>
 #include <algorithm>
 
 namespace
 {
-	using namespace NewLexer;
+	using namespace Lexer;
 	using std::static_pointer_cast;
 
 	static std::vector<Variable> definedVars =  { 
@@ -220,7 +220,7 @@ namespace
 	}
 }
 
-void NewLexer::parseTypedLexemes(std::vector<NewLexer::LexemeLine> & lexemeDoc)
+void Lexer::parseTypedLexemes(std::vector<Lexer::LexemeLine> & lexemeDoc)
 {
 	generateScopeLines(lexemeDoc);
 

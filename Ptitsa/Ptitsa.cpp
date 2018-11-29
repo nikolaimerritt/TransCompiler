@@ -4,7 +4,7 @@
 #include <string>
 #include <set>
 
-#include "Compiler/NewLexer.h"
+#include "Compiler/Lexer.h"
 #include "Compiler/BuildContextTree.h"
 #include "Compiler/Util.h"
 #include "Compiler/InterpretTree.h"
@@ -28,8 +28,8 @@ void writeCode(std::string const & cppCode)
 
 int main()
 {
-    std::vector<NewLexer::LexemeLine> lexemeDoc = NewLexer::createTypedLexemes(getCode());
-    NewLexer::parseTypedLexemes(lexemeDoc);
+    std::vector<Lexer::LexemeLine> lexemeDoc = Lexer::createTypedLexemes(getCode());
+    Lexer::parseTypedLexemes(lexemeDoc);
     std::vector<BuildContextTree::ContextTree> trees = BuildContextTree::generateContextTrees(lexemeDoc);
     std::cout << InterpretTree::treesToString(trees) << std::endl;
 

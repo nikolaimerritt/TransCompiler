@@ -3,41 +3,41 @@
 
 #include <vector>
 #include <set>
-#include "NewLexer.h"
+#include "Lexer.h"
 #include "Util.h"
 
-std::vector<std::vector<NewLexer::Function>> const NewLexer::opsBeforeCommands = {
-	{ NewLexer::Function("^", "^", NewLexer::Function::INFIX) },
+std::vector<std::vector<Lexer::Function>> const Lexer::opsBeforeCommands = {
+	{ Lexer::Function("^", "^", Lexer::Function::INFIX) },
 	{
-		NewLexer::Function("*", "*", NewLexer::Function::INFIX),
-		NewLexer::Function("/", "/", NewLexer::Function::INFIX)
+		Lexer::Function("*", "*", Lexer::Function::INFIX),
+		Lexer::Function("/", "/", Lexer::Function::INFIX)
 	},
 	{
-		NewLexer::Function("+", "+", NewLexer::Function::INFIX),
-		NewLexer::Function("-", "-", NewLexer::Function::INFIX)
+		Lexer::Function("+", "+", Lexer::Function::INFIX),
+		Lexer::Function("-", "-", Lexer::Function::INFIX)
 	}
 };
 
-std::vector<std::vector<NewLexer::Function>> const NewLexer::opsAfterCommands({
+std::vector<std::vector<Lexer::Function>> const Lexer::opsAfterCommands({
 	{
-		NewLexer::Function("is", "==", NewLexer::Function::INFIX),
-		NewLexer::Function("isnt", "!=", NewLexer::Function::INFIX)
+		Lexer::Function("is", "==", Lexer::Function::INFIX),
+		Lexer::Function("isnt", "!=", Lexer::Function::INFIX)
 	},
-	{ NewLexer::Function("and", "&&", NewLexer::Function::INFIX) },
-	{ NewLexer::Function("or", "||", NewLexer::Function::INFIX) },
-	{ NewLexer::Function("not", "!", NewLexer::Function::PREFIX, 1) },
-	{ NewLexer::Function("=", "=", NewLexer::Function::INFIX) }
+	{ Lexer::Function("and", "&&", Lexer::Function::INFIX) },
+	{ Lexer::Function("or", "||", Lexer::Function::INFIX) },
+	{ Lexer::Function("not", "!", Lexer::Function::PREFIX, 1) },
+	{ Lexer::Function("=", "=", Lexer::Function::INFIX) }
 	});
 
-std::vector<NewLexer::Function> NewLexer::commands({
-	NewLexer::Function("not", "!", NewLexer::Function::PREFIX, 1),
-	NewLexer::Function("show", "Library::show", NewLexer::Function::PREFIX, -1),
-	NewLexer::Function("exp", "Library::exp", NewLexer::Function::PREFIX, 1)
+std::vector<Lexer::Function> Lexer::commands({
+	Lexer::Function("not", "!", Lexer::Function::PREFIX, 1),
+	Lexer::Function("show", "Library::show", Lexer::Function::PREFIX, -1),
+	Lexer::Function("exp", "Library::exp", Lexer::Function::PREFIX, 1)
 });
 
 namespace
 {
-	using namespace NewLexer;
+	using namespace Lexer;
 	using std::static_pointer_cast;
 
 	std::set<Variable> definedVariables = { };
@@ -363,7 +363,7 @@ namespace
 	}
 }
 
-bool NewLexer::couldSetFunctionFromName(NewLexer::Function & fn, std::string const & name)
+bool Lexer::couldSetFunctionFromName(Lexer::Function & fn, std::string const & name)
 {
 	if (couldIdentifyFunctionInGroups(fn, name, opsBeforeCommands)) return true;
 	if (couldIdentifyFunctionInGroups(fn, name, opsAfterCommands)) return true;
@@ -380,7 +380,7 @@ bool NewLexer::couldSetFunctionFromName(NewLexer::Function & fn, std::string con
 	return false;
 }
 
-std::vector<NewLexer::LexemeLine> NewLexer::createTypedLexemes(std::string const & code)
+std::vector<Lexer::LexemeLine> Lexer::createTypedLexemes(std::string const & code)
 {
 	const std::vector<std::vector<std::string>> codeDocument = codeToLines(code);
 	std::vector<LexemeLine> lexemeDoc = docToUntypedLines(codeDocument);

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-#include "NewLexer.h"
+#include "Lexer.h"
 #include "BuildAST.h"
 #include "BuildContextTree.h"
 
@@ -39,16 +39,16 @@ namespace Util
 	//void printContextTrees(const std::vector<BuildContextTree::ContextTree*>&);
 	//void deleteContextTrees(std::vector<BuildContextTree::ContextTree*>&);
 	
-	int bracketPolarity(NewLexer::LexemeLine const & line);
-	int bracketPolarity(NewLexer::LexemeLine const & line, unsigned end);
-	int bracketPolarity(NewLexer::LexemeLine const & line, unsigned start, unsigned end);
+	int bracketPolarity(Lexer::LexemeLine const & line);
+	int bracketPolarity(Lexer::LexemeLine const & line, unsigned end);
+	int bracketPolarity(Lexer::LexemeLine const & line, unsigned start, unsigned end);
 	
-	int closingBracketIndex(NewLexer::LexemeLine const & line, unsigned start);
+	int closingBracketIndex(Lexer::LexemeLine const & line, unsigned start);
 
-	std::vector<std::vector<NewLexer::PLexeme>> commandArguments(NewLexer::LexemeLine const & line, unsigned openingBracketIdx);
+	std::vector<std::vector<Lexer::PLexeme>> commandArguments(Lexer::LexemeLine const & line, unsigned openingBracketIdx);
 
-	// NewLexer
-	void printNewLexemeLine(NewLexer::LexemeLine const &);
+	// Lexer
+	void printNewLexemeLine(Lexer::LexemeLine const &);
 }
 
 #endif

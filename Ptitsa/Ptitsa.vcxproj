@@ -153,7 +153,7 @@
     <ClInclude Include="Compiler\InterpretTree.h" />
     <ClInclude Include="Compiler\Mistake.h" />
     <ClInclude Include="Compiler\BuildAST.h" />
-    <ClInclude Include="Compiler\NewLexer.h" />
+    <ClInclude Include="Compiler\Lexer.h" />
     <ClInclude Include="Compiler\Util.h" />
     <ClInclude Include="Language\Core.h" />
     <ClInclude Include="Language\Object.h" />
