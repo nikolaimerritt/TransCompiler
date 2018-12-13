@@ -1,6 +1,7 @@
 New lines separate statements
 Variable declaration is as normal, e.g. `x = 12`. Variables are dynamically typed
 Comments are written in curly braces, e.g. { comment is here }
+Lists are written in comma-separated square brackets, like this: [a, b, c]
 
 If statements:
 if x is 12

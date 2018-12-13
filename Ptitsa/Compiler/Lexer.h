@@ -25,7 +25,7 @@ namespace Lexer
 	struct RawLexeme : Lexeme
 	{
 		std::string value;
-		bool isRaw();
+		bool isRaw() override;
 		RawLexeme(std::string const &);
 	};
 
@@ -37,7 +37,7 @@ namespace Lexer
 		static std::map<std::string, Type> const valuesToKeywordTypes;
 		static std::map<Type, std::string> const typeToCpp;
 
-		bool isKeyword();
+		bool isKeyword() override;
 		Keyword(Type);
 	};
 
@@ -47,7 +47,7 @@ namespace Lexer
 	{
 		enum Type { PHRASE, NUMBER, BOOL } type;		
 		std::string value;
-		bool isLiteral();
+		bool isLiteral() override;
 
 		Literal(std::string const &, Type);
 	};
@@ -61,7 +61,7 @@ namespace Lexer
 		bool processed;
 		int args; // value of -1 means takes any amount of args
 		std::string identifier, asCpp;
-		bool isFunction();
+		bool isFunction() override;
 
 		Function();
 		Function(std::string const & identifier, std::string const & asCpp, Type type);
@@ -80,10 +80,10 @@ namespace Lexer
 	{
 		unsigned depth, row;
 		std::string identifier;
-		bool isVariable();
+		bool isVariable() override;
 
 		Variable();
-		Variable(std::string const & identifier);
+		 Variable(std::string const & identifier);
 		Variable(std::string const &, unsigned lineNumber, unsigned depth);
 
 		bool operator==(Variable const & other) const;
@@ -98,7 +98,7 @@ namespace Lexer
 		enum Type { OPEN_BRACKET, CLOSE_BRACKET, ARGS_SEP, COLON, DEPTH } type;
 		bool processed;
 		static std::map<std::string, Symbol::Type> const idsToSymbols;
-		bool isSymbol();
+		bool isSymbol() override;
 
 		Symbol(Type);
 	};
@@ -110,8 +110,8 @@ namespace Lexer
 		enum Type { VAR_CREATION, VAR_REDEFINITION, IF, WHILE, FOR_EACH, VOID_FUNCTION_CALL, SCOPE_ENTER, SCOPE_EXIT, UNKNOWN } type;
 		unsigned depth;
 
-		LexemeLine(std::vector<PLexeme> const &);
-		LexemeLine(Type);
+		 LexemeLine(std::vector<PLexeme> const &);
+		 LexemeLine(Type);
 		LexemeLine();
 
 		PLexeme& operator[](unsigned);

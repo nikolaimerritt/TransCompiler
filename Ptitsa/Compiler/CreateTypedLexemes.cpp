@@ -163,12 +163,11 @@ namespace
 
 	void identifyDepthLexemes(LexemeLine & line)
 	{
-		for (unsigned i = 0; i < line.size(); i++)
+		for (PLexeme & lex : line)
 		{
-			if (line[i]->isRaw()
-				&& static_pointer_cast<RawLexeme>(line[i])->value == "\t")
+			if (lex->isRaw()&& static_pointer_cast<RawLexeme>(lex)->value == "\t")
 			{
-				line[i] = std::make_shared<Symbol>(Symbol::DEPTH);
+				lex = std::make_shared<Symbol>(Symbol::DEPTH);
 			}
 		}
 	}
@@ -183,8 +182,8 @@ namespace
 
 				if (rawLex->value[0] == '\"') // found start of phrase
 				{
-					std::string const idWithoutQuote = rawLex->value.substr(1, rawLex->value.size() - 1);
-					line[i] = std::make_shared<Literal>(idWithoutQuote, Literal::PHRASE);
+					rawLex->value = rawLex->value.substr(1, rawLex->value.size() - 1); // removing quote
+					int const phraseIdx = i;
 
 					// appending next words to current string,  until end of string found
 					while (i + 1 < line.size() 
@@ -195,22 +194,23 @@ namespace
 						line.erase(i + 1);
 					}
 					rawLex->value.pop_back(); // deleting '\"' character
-				}
+                    line[phraseIdx] = std::make_shared<Literal>(rawLex->value, Literal::PHRASE);
+                }
 			}
 		}
 	}
 
 	void identifyNumbers(LexemeLine & line)
 	{
-		for (unsigned i = 0; i < line.size(); i++)
+		for (PLexeme & lex : line)
 		{
-			if (line[i]->isRaw())
+			if (lex->isRaw())
 			{
-				std::string const value = static_pointer_cast<RawLexeme>(line[i])->value;
+				std::string const value = static_pointer_cast<RawLexeme>(lex)->value;
 				if (Util::isNumber(value))
 				{
 					std::string const number = Util::toDecimal(value);
-					line[i] =  std::make_shared<Literal>(number, Literal::NUMBER);
+					lex =  std::make_shared<Literal>(number, Literal::NUMBER);
 				}
 			}
 		}
@@ -218,29 +218,34 @@ namespace
 
 	void identifyBooleans(LexemeLine & line)
 	{
-		for (unsigned i = 0; i < line.size(); i++)
+		for (PLexeme & lex : line)
 		{
-			if (line[i]->isRaw())
+			if (lex->isRaw())
 			{
-				std::string const value = static_pointer_cast<RawLexeme>(line[i])->value;
+				std::string const value = static_pointer_cast<RawLexeme>(lex)->value;
 				if (value == "true" || value == "false")
 				{
-					line[i] = std::make_shared<Literal>(value, Literal::BOOL);
+					lex = std::make_shared<Literal>(value, Literal::BOOL);
 				}
 			}			
 		}
 	}
+
+	void identifyLists(LexemeLine & line)
+    {
+
+    }
 	
 	void identifySyntaxSymbols(LexemeLine & line)
 	{
-		for (unsigned i = 0; i < line.size(); i++)
+		for (PLexeme & lex : line)
 		{
-			if (line[i]->isRaw())
+			if (lex->isRaw())
 			{
-				std::string const id = static_pointer_cast<RawLexeme>(line[i])->value;
+				std::string const id = static_pointer_cast<RawLexeme>(lex)->value;
 				if (Symbol::idsToSymbols.count(id))
 				{
-					line[i] = std::make_shared<Symbol>(Symbol::idsToSymbols.at(id));
+					lex = std::make_shared<Symbol>(Symbol::idsToSymbols.at(id));
 				}
 			}
 		}
@@ -282,13 +287,13 @@ namespace
 
 	void identifyFunctionUses(LexemeLine & line)
 	{
-		for (unsigned i = 0; i < line.size(); i++)
+		for (PLexeme & lex : line)
 		{
-			if (line[i]->isRaw())
+			if (lex->isRaw())
 			{
-				std::string const name = static_pointer_cast<RawLexeme>(line[i])->value;
+				std::string const name = static_pointer_cast<RawLexeme>(lex)->value;
 				Function fn;
-				if (couldSetFunctionFromName(fn, name)) line[i] = std::make_shared<Function>(fn);
+				if (couldSetFunctionFromName(fn, name)) lex = std::make_shared<Function>(fn);
 			}
 		}
 	}

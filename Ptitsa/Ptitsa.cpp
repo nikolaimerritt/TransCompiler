@@ -31,7 +31,7 @@ int main()
     std::vector<Lexer::LexemeLine> lexemeDoc = Lexer::createTypedLexemes(getCode());
     Lexer::parseTypedLexemes(lexemeDoc);
     std::vector<BuildContextTree::ContextTree> trees = BuildContextTree::generateContextTrees(lexemeDoc);
-    std::cout << InterpretTree::treesToString(trees) << std::endl;
+    writeCode(InterpretTree::treesToString(trees));
 
     return 0;
 }

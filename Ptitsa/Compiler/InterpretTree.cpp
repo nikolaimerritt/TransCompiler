@@ -20,7 +20,7 @@ namespace
 		{
 			Literal const lit = * static_pointer_cast<Literal>(lex);
 
-			if (lit.type == Literal::PHRASE)	return "std::string(" + lit.value + ")";
+			if (lit.type == Literal::PHRASE)	return "std::string(\"" + lit.value + "\")";
 			else return lit.value;
 		}
 
@@ -119,8 +119,8 @@ namespace
 std::string InterpretTree::treesToString(std::vector<BuildContextTree::ContextTree> const & trees)
 {
 	std::string cppCode = R"(
-#include "Language\Object.h
-#include "Language\Core.h
+#include "Language\Object.h"
+#include "Language\Core.h"
 
 int main()
 {
