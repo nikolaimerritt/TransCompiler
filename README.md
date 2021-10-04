@@ -2,7 +2,7 @@
 
 Transcompiles a dynamically-typed "pseudocode" language, Ptitsa, to C++
 
-<img src="images/icon.jpg"/> 
+<img styles="align: center" src="images/icon.jpg"/> 
 
 # Ptitsa specification
 
