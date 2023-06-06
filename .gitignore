@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# Extras
+.vscode/
+CMakeCache.txt
+CMakeFiles/
+C_TransCompiler
+Makefile
+Ptitsa/program.cpp
+build/
+cmake_install.cmake

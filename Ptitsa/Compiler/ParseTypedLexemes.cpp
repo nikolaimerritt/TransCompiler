@@ -161,7 +161,7 @@ namespace
 			}
 			else r++;
 		}
-		if (lexemeDoc.back().depth > lexemeDoc.front().depth)
+		if (!lexemeDoc.empty() && lexemeDoc.back().depth > lexemeDoc.front().depth)
 		{
 			removeIndentLexemes(lexemeDoc.back());
 			lexemeDoc.push_back(scopeExitLine);

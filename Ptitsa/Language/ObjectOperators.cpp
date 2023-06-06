@@ -3,8 +3,8 @@
 #include <cmath>
 
 #include "Object.h"
-#include "..\Compiler\Mistake.h"
-#include "..\Compiler\Util.h"
+#include "../Compiler/Mistake.h"
+#include "../Compiler/Util.h"
 
 BuiltinType::Object& BuiltinType::Object::operator=(double d)
 {

@@ -11,7 +11,7 @@
 
 std::string getCode()
 {
-    std::string const inputFile = "program.pti";
+    std::string const inputFile = "Ptitsa/program.pti";
     std::ifstream file(inputFile);
     std::stringstream buffer;
     buffer << file.rdbuf();
@@ -20,7 +20,7 @@ std::string getCode()
 
 void writeCode(std::string const & cppCode)
 {
-    std::string const outputFile = "program.cpp";
+    std::string const outputFile = "Ptitsa/program.cpp";
     std::ofstream output(outputFile);
     output << cppCode;
     output.close();

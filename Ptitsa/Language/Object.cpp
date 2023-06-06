@@ -4,8 +4,8 @@
 #include <sstream>
 
 #include "Object.h"
-#include "..\Compiler\Util.h"
-#include "..\Compiler\Mistake.h"
+#include "../Compiler/Util.h"
+#include "../Compiler/Mistake.h"
 
 // ADD IN CONSTRUCTORS WITH RVALUES
 

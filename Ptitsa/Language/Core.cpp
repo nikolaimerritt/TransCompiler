@@ -4,7 +4,7 @@
 #include "Core.h"
 #include "Object.h"
 #include "Core.h"
-#include "..\Compiler\Mistake.h"
+#include "../Compiler/Mistake.h"
 
 bool Library::isTrue(bool b) { return b; }
 bool Library::isTrue(BuiltinType::Object const& object)

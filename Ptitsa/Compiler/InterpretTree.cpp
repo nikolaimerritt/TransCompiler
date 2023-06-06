@@ -132,8 +132,9 @@ int main()
 		cppCode += treeToString(tree) + "\n";
 	}
 	cppCode += R"(
+
+	return 0;
 }
-return 0;
 )";
 	return cppCode;
 }
